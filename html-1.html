@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>StyleSense Fashion Recommender</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<h2>StyleSense Fashion Recommendation</h2>
+
+<form action="recommend" method="post">
+
+<label>Gender</label>
+<select name="gender">
+<option value="Male">Male</option>
+<option value="Female">Female</option>
+<option value="Unisex">Unisex</option>
+</select>
+
+<label>Occasion</label>
+<select name="occasion">
+<option value="Casual">Casual</option>
+<option value="Formal">Formal</option>
+<option value="Party">Party</option>
+</select>
+
+<label>Color Preference</label>
+<input type="text" name="color">
+
+<label>Weather</label>
+<select name="weather">
+<option value="Hot">Hot</option>
+<option value="Cold">Cold</option>
+</select>
+
+<br><br>
+<button type="submit">Get Recommendation</button>
+
+</form>
+
+</body>
+</html>
