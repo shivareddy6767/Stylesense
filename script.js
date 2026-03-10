@@ -1,31 +1,39 @@
-document.querySelector("form").addEventListener("submit", async function(event) {
+document.querySelector("#styleForm").addEventListener("submit", async function(event){
 
-    event.preventDefault();
+event.preventDefault();
 
-    let gender = document.querySelectorAll("select")[0].value;
-    let occasion = document.querySelectorAll("select")[1].value;
-    let color = document.querySelector("input").value;
+let gender = document.getElementById("gender").value;
+let occasion = document.getElementById("occasion").value;
+let color = document.getElementById("color").value;
+let image = document.getElementById("image").files[0];
 
-    try {
-        let response = await fetch("http://127.0.0.1:8000/recommend", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                gender: gender,
-                occasion: occasion,
-                color: color
-            })
-        });
+let formData = new FormData();
 
-        let data = await response.json();
+formData.append("gender", gender);
+formData.append("occasion", occasion);
+formData.append("color", color);
+formData.append("image", image);
 
-        alert(data.suggestion);
+let response = await fetch("http://127.0.0.1:8000/recommend",{
+method:"POST",
+body:formData
+});
 
-    } catch (error) {
-        console.log("Error:", error);
-        alert("Something went wrong. Check backend.");
-    }
+let data = await response.json();
+
+let resultDiv = document.getElementById("result");
+
+/* REMOVE OLD IMAGES */
+resultDiv.innerHTML = "";
+
+data.outfits.forEach(img => {
+
+let imageElement = document.createElement("img");
+imageElement.src = img;
+imageElement.className = "outfit-img";
+
+resultDiv.appendChild(imageElement);
+
+});
 
 });

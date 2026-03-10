@@ -8,31 +8,36 @@
 <body>
 
 <h1>StyleSense AI 👗</h1>
-<p>Find your perfect outfit using AI</p>
+<p>Upload your photo and see AI outfit suggestions</p>
 
 <div class="container">
 
-<form>
+<form id="styleForm">
 
 <label>Gender</label>
-<select>
+<select id="gender">
 <option>Male</option>
 <option>Female</option>
 </select>
 
 <label>Occasion</label>
-<select>
+<select id="occasion">
 <option>Casual</option>
 <option>Party</option>
 <option>Office</option>
 </select>
 
 <label>Preferred Color</label>
-<input type="text" placeholder="Enter color">
+<input type="text" id="color" placeholder="Enter color">
 
-<button type="submit">Get Style</button>
+<label>Upload Your Photo</label>
+<input type="file" id="image">
+
+<button type="submit">Get AI Outfit</button>
 
 </form>
+
+<div id="result"></div>
 
 </div>
 

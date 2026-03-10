@@ -1,10 +1,9 @@
-from fastapi import FastAPI
-from pydantic import BaseModel
+from fastapi import FastAPI, UploadFile, File, Form
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
-# Allow frontend to connect
+# Allow frontend
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -13,15 +12,33 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-class OutfitRequest(BaseModel):
-    gender: str
-    occasion: str
-    color: str
-
-
 @app.post("/recommend")
-def recommend(data: OutfitRequest):
+async def recommend(
+    gender: str = Form(...),
+    occasion: str = Form(...),
+    color: str = Form(...),
+    image: UploadFile = File(...)
+):
 
-    outfit = f"For a {data.occasion} occasion, a {data.color} outfit is perfect for {data.gender}"
+    # Only MALE outfit images
+    male_outfits = [
+        "https://images.pexels.com/photos/1043474/pexels-photo-1043474.jpeg",
+        "https://images.pexels.com/photos/428338/pexels-photo-428338.jpeg",
+        "https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg"
+    ]
 
-    return {"suggestion": outfit}
+    # Only FEMALE outfit images
+    female_outfits = [
+        "https://images.pexels.com/photos/1536619/pexels-photo-1536619.jpeg",
+        "https://images.pexels.com/photos/6311475/pexels-photo-6311475.jpeg",
+        "https://images.pexels.com/photos/1036623/pexels-photo-1036623.jpeg"
+    ]
+
+    gender = gender.lower().strip()
+
+    if gender == "male":
+        outfits = male_outfits
+    else:
+        outfits = female_outfits
+
+    return {"outfits": outfits}
